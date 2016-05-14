@@ -105,9 +105,15 @@ public class GameObject {
             JsonObject obj = (JsonObject) json_players.get(i);
 
             if(i == getIn_action()) {
-                ourPlayer = new OurPlayer();
+                ourPlayer = new OurPlayer(obj.get("id").getAsInt(), obj.get("name").getAsString(),
+                        obj.get("status").getAsString(),
+                        obj.get("stack").getAsInt(),
+                        obj.get("bet").getAsInt(), new ArrayList<Card>());
             } else {
-                Player pl = new Player();
+                Player pl = new Player(obj.get("id").getAsInt(), obj.get("name").getAsString(),
+                        obj.get("status").getAsString(),
+                        obj.get("stack").getAsInt(),
+                        obj.get("bet").getAsInt(), new ArrayList<Card>());
                 players.add(pl);
             }
 
@@ -124,6 +130,16 @@ public class GameObject {
         int bet;
         //attention, this exist in other players than others in the end when cards are revealed!
         List<Card> holeCards = new ArrayList<Card>();
+
+        public Player(int id, String name, String status, int stack, int bet, List<Card> holeCards) {
+            this.id = id;
+            this.name = name;
+            this.status = status;
+            this.stack = stack;
+            this.bet = bet;
+            this.holeCards = holeCards;
+        }
+
 
         public int getId() {
             return id;
@@ -152,7 +168,9 @@ public class GameObject {
     }
 
     public class OurPlayer extends Player {
-
+        public OurPlayer(int id, String name, String status, int stack, int bet, List<Card> holeCards) {
+            super(id, name, status, stack, bet, holeCards);
+        }
     }
 
     public class Card {

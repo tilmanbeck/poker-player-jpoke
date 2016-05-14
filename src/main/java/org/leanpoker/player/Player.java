@@ -28,6 +28,11 @@ public class Player {
         SimpleStrategy strategy = new SimpleStrategy(go);
         //int bet = strategy.performBet(playerBet);
 
+
+        if(go.getPlayers().size() == 1) {
+            //System.out.println("player size: " + 1);
+            return Integer.MAX_VALUE; // all in if just us and another one
+        }
         int bet = go.getCurrent_buy_in() - playerBet + go.getMinimumRaise() + (rand.nextInt((max - min) + 1) + min);
         System.out.println("Our bet: " + bet);
         return bet;
