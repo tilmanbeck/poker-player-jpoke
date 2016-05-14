@@ -14,6 +14,7 @@ public class Player {
     static final String VERSION = "Non-Default Java Killer-Bot";
 
     public static int betRequest(JsonElement request) {
+        System.out.println("Initial request: \n" + request);
         GameObject go = new GameObject(request);
         JsonObject json = request.getAsJsonObject();
 
@@ -24,6 +25,7 @@ public class Player {
 
 
         int bet = go.getCurrent_buy_in() - playerBet + go.getMinimumRaise() + (rand.nextInt((max - min) + 1) + min);
+        System.out.println("Our bet: " + bet);
         return bet;
     }
 
