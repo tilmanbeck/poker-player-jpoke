@@ -43,6 +43,45 @@ public class SimpleStrategy implements Strategy {
 
 
         if(cards.size() != 0) {
+            //check for full house
+            int aces = 0;
+            int queens = 0;
+            int kings = 0;
+            int boys = 0;
+            int tens = 0;
+            int nines = 0;
+            int eights = 0;
+            int sevens = 0;
+            int sixes =0;
+            int fives = 0;
+            int fours= 0;
+            int threes = 0;
+            int twos = 0;
+
+            /*for (GameObject.Card card : cards) {
+                switch (card.getSuit()){
+                    case "A": aces++;
+                        break;
+                    case "Q": queens++;break;
+                    case "J": boys++;break;
+                    case "K": kings++;break;
+                    case "10": tens++;break;
+                    case "9": nines++;break;
+                    case "8": eights++;break;
+                    case "7": sevens++;break;
+                    case "6": sixes++;break;
+                    case "5": fives++;break;
+                    case "4": fours++;break;
+                    case "3": threes++;break;
+                    case "2": twos++;break;
+
+
+                }
+
+            }*/
+
+
+
             int count = 0;
             //check for flush
             if(sameSuit) {
