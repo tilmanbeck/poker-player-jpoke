@@ -18,7 +18,7 @@ public class GameObject {
     int dealer;
     int orbits;
     int in_action;
-    List<CommunityCard> communityCards = new ArrayList<CommunityCard>();
+    List<Card> communityCards = new ArrayList<Card>();
     List<Player> players = new ArrayList<Player>();
     OurPlayer ourPlayer;
 
@@ -77,24 +77,65 @@ public class GameObject {
         orbits = json.get("orbits").getAsInt();
         in_action= json.get("in_action").getAsInt();
 
-        JsonArray players = json.getAsJsonArray("players");
-        JsonArray community_cards = json.getAsJsonArray("community_cards");
+        JsonArray json_players = json.getAsJsonArray("players");
+        JsonArray json_community_cards = json.getAsJsonArray("community_cards");
 
 
-        JsonObject oP = (JsonObject) players.get(in_action);
-        ourPlayer = new OurPlayer();
+        //parsing community cards
+        for (int i = 0 ; i < json_community_cards.size() ; i++) {
+            JsonObject obj = (JsonObject) json_community_cards.get(i);
+            Card c = new Card(obj.get("rank").getAsString(), obj.get("suit").getAsString());
+            communityCards.add(c);
+        }
+
+        //parsing players
+        for (int i = 0 ; i < json_players.size() ; i++) {
+            JsonObject obj = (JsonObject) json_players.get(i);
+
+            if(i == getIn_action()) {
+                ourPlayer = new OurPlayer();
+            } else {
+                Player pl = new Player();
+                players.add(pl);
+            }
+
+
+        }
+
     }
 
     private class Player {
+        int id;
+        String name;
+        String status;
+        int stack;
+        int bet;
+
+        //attention, this exist in other players than others in the end when cards are revealed!
+        List<Card> holeCards = new ArrayList<Card>();
+    }
+
+    private class OurPlayer extends Player {
 
     }
 
-    private class OurPlayer {
+    private class Card {
 
-    }
+        String rank;
+        String suit;
 
-    private class CommunityCard {
+        private Card(String rank, String suit) {
+            this.rank = rank;
+            this.suit = suit;
+        }
 
+        public String getRank() {
+            return rank;
+        }
+
+        public String getSuit() {
+            return suit;
+        }
     }
 
 
