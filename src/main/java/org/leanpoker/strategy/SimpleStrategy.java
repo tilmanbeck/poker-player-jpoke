@@ -3,6 +3,8 @@ package org.leanpoker.strategy;
 import com.google.gson.JsonElement;
 import org.leanpoker.player.GameObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class SimpleStrategy implements Strategy {
@@ -30,23 +32,44 @@ public class SimpleStrategy implements Strategy {
             return Integer.MAX_VALUE; // all in if just us and another one
         }
 
+        List<GameObject.Card> cards = go.getCommunityCards();
+        if(cards.size() != 0) {
+            for (GameObject.Card card : cards) {
+                if(isTriple(firstCard, scndCard, card)){
+                    return  call();
+                }
+            }
+
+        }
+
         //if two cards of same rank
         if((sameRank || sameSuit) && go.getRound() == 0) {
 
             return Integer.MAX_VALUE; // all in
         }
 
+
         if(twoHighCards(firstCard, scndCard)) {
             return call();
         }
 
         //TODO
-        if(go.getCommunityCards().size() != 0) {
 
-        }
 
         int bet = call() + (rand.nextInt((max - min) + 1) + min);
         return bet;
+    }
+
+    private boolean isTriple(GameObject.Card firstCard, GameObject.Card scndCard, GameObject.Card card) {
+        //System.out.println("Ranks: " + firstCard.getRank() + scndCard.getRank() + card.getRank());
+        if(firstCard.getRank().equalsIgnoreCase(scndCard.getRank())) {
+            if (firstCard.getRank().equalsIgnoreCase(card.getRank())) {
+                //System.out.println("3 equal cards");
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     private boolean twoHighCards(GameObject.Card firstCard, GameObject.Card scndCard) {
