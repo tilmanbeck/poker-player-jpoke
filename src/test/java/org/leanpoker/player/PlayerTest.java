@@ -23,4 +23,17 @@ public class PlayerTest {
         assertNotNull("Null was returned", Player.betRequest(jsonEm));
 
     }
+    @Test
+    public void testGetRanking() throws Exception {
+        Player pl = new Player ();
+        JsonElement jsem = new JsonParser().parse(new FileReader("src/test/testranking.json"));
+        /*JsonObject jsobj = (JsonObject) obj;
+        JsonElement jsonEm = jsobj;*/
+
+        JsonElement ranking = Player.getRanking(jsem);
+        assertNotNull("Null was returned", ranking);
+        System.out.println("ranking: " + ranking);
+
+    }
+
 }
