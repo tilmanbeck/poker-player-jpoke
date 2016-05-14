@@ -26,6 +26,18 @@ public class GameObject {
         return game_id;
     }
 
+    public List<Card> getCommunityCards() {
+        return communityCards;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public OurPlayer getOurPlayer() {
+        return ourPlayer;
+    }
+
     public int getMinimumRaise() {
         return minimumRaise;
     }
@@ -104,7 +116,7 @@ public class GameObject {
 
     }
 
-    private class Player {
+    public class Player {
         int id;
         String name;
         String status;
@@ -139,11 +151,11 @@ public class GameObject {
 
     }
 
-    private class OurPlayer extends Player {
+    public class OurPlayer extends Player {
 
     }
 
-    private class Card {
+    public class Card {
 
         String rank;
         String suit;
