@@ -11,7 +11,7 @@ public class Player {
     static Random rand = new Random();
     static int min = 0;
     static int max = 100;
-    static final String VERSION = "Default Java folding player";
+    static final String VERSION = "Non-Default Java Killer-Bot";
 
     public static int betRequest(JsonElement request) {
         GameObject go = new GameObject(request);
