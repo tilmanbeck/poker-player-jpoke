@@ -3,6 +3,8 @@ package org.leanpoker.strategy;
 import com.google.gson.JsonElement;
 import org.leanpoker.player.GameObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class SimpleStrategy implements Strategy {
@@ -30,23 +32,82 @@ public class SimpleStrategy implements Strategy {
             return Integer.MAX_VALUE; // all in if just us and another one
         }
 
+
+
+
+        //check if triples with community cards
+        List<GameObject.Card> cards = go.getCommunityCards();
+
+
+
+
+
+        if(cards.size() != 0) {
+            int count = 0;
+            //check for flush
+            if(sameSuit) {
+                int flushCount = 0;
+                for (GameObject.Card card : cards) {
+                    if(card.getSuit().equalsIgnoreCase(firstCard.getSuit())) {
+                        flushCount++;
+                    }
+                }
+                if(flushCount >= 3) {
+                    System.out.println("FLUSH!!!!");
+                    return Integer.MAX_VALUE;
+                }
+
+            }
+
+            for (GameObject.Card card : cards) {
+
+                if(isTriple(firstCard, scndCard, card)){
+                    return  call();
+                }
+                if(firstCard.getRank().equalsIgnoreCase(card.getRank())) {
+                    count++;
+                }
+                if(scndCard.getRank().equalsIgnoreCase(card.getRank())) {
+                    count++;
+                }
+
+            }
+
+            if(count >=2) {
+                //we have two pairs together with the community cards
+                System.out.println("we have two pairs");
+                return call() + 100;
+            }
+
+        }
+
+        //check if two pairs with community cards
+
         //if two cards of same rank
         if((sameRank || sameSuit) && go.getRound() == 0) {
 
             return Integer.MAX_VALUE; // all in
         }
 
+        //two high cards then we call
         if(twoHighCards(firstCard, scndCard)) {
             return call();
         }
 
-        //TODO
-        if(go.getCommunityCards().size() != 0) {
+        //int bet = call() + (rand.nextInt((max - min) + 1) + min);
+        return call();
+    }
 
+    private boolean isTriple(GameObject.Card firstCard, GameObject.Card scndCard, GameObject.Card card) {
+        //System.out.println("Ranks: " + firstCard.getRank() + scndCard.getRank() + card.getRank());
+        if(firstCard.getRank().equalsIgnoreCase(scndCard.getRank())) {
+            if (firstCard.getRank().equalsIgnoreCase(card.getRank())) {
+                //System.out.println("3 equal cards");
+                return true;
+            }
+            return false;
         }
-
-        int bet = call() + (rand.nextInt((max - min) + 1) + min);
-        return bet;
+        return false;
     }
 
     private boolean twoHighCards(GameObject.Card firstCard, GameObject.Card scndCard) {
