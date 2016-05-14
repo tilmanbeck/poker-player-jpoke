@@ -26,9 +26,14 @@ public class Player {
         int dealer = json.get("dealer").getAsInt();
         int orbits = json.get("orbits").getAsInt();
         int in_action = json.get("in_action").getAsInt();
-        JsonObject players = json.getAsJsonObject("players");
-        JsonObject community_cards = (JsonObject) json.get("community_cards");
+        JsonArray players = json.getAsJsonArray("players");
+        JsonArray community_cards = json.getAsJsonArray("community_cards");
 
+        JsonObject ourPlayer = (JsonObject) players.get(in_action);
+        int playerBet = ourPlayer.get("bet").getAsInt();
+
+
+        int bet = current_buy_in - playerBet + minimumRaise;
 
 
         return rand.nextInt((max - min) + 1) + min;
