@@ -26,6 +26,18 @@ public class GameObject {
         return game_id;
     }
 
+    public List<Card> getCommunityCards() {
+        return communityCards;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public OurPlayer getOurPlayer() {
+        return ourPlayer;
+    }
+
     public int getMinimumRaise() {
         return minimumRaise;
     }
@@ -104,22 +116,46 @@ public class GameObject {
 
     }
 
-    private class Player {
+    public class Player {
         int id;
         String name;
         String status;
         int stack;
         int bet;
-
         //attention, this exist in other players than others in the end when cards are revealed!
         List<Card> holeCards = new ArrayList<Card>();
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public int getStack() {
+            return stack;
+        }
+
+        public int getBet() {
+            return bet;
+        }
+
+        public List<Card> getHoleCards() {
+            return holeCards;
+        }
+
     }
 
-    private class OurPlayer extends Player {
+    public class OurPlayer extends Player {
 
     }
 
-    private class Card {
+    public class Card {
 
         String rank;
         String suit;
