@@ -70,8 +70,8 @@ public class SimpleStrategy implements Strategy {
             return call();
         }
 
-        int bet = call() + (rand.nextInt((max - min) + 1) + min);
-        return bet;
+        //int bet = call() + (rand.nextInt((max - min) + 1) + min);
+        return call();
     }
 
     private boolean isTriple(GameObject.Card firstCard, GameObject.Card scndCard, GameObject.Card card) {
