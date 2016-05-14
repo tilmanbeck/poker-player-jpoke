@@ -32,9 +32,26 @@ public class SimpleStrategy implements Strategy {
             return Integer.MAX_VALUE; // all in if just us and another one
         }
 
+        //check for flush
+
 
         //check if triples with community cards
         List<GameObject.Card> cards = go.getCommunityCards();
+
+        if(sameSuit) {
+            int count = 0;
+            for (GameObject.Card card : cards) {
+                if(card.getSuit().equalsIgnoreCase(firstCard.getSuit())) {
+                    count++;
+                }
+            }
+            if(count >= 3) {
+                System.out.println("FLUSH!!!!");
+                return Integer.MAX_VALUE;
+            }
+        }
+
+
         if(cards.size() != 0) {
             int count = 0;
             for (GameObject.Card card : cards) {
