@@ -36,7 +36,7 @@ public class Player {
         int bet = current_buy_in - playerBet + minimumRaise;
 
 
-        return rand.nextInt((max - min) + 1) + min;
+        return bet;
     }
 
     public static void showdown(JsonElement game) {
