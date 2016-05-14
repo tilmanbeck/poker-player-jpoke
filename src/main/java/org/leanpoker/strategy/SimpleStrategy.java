@@ -32,15 +32,32 @@ public class SimpleStrategy implements Strategy {
             return Integer.MAX_VALUE; // all in if just us and another one
         }
 
+
+        //check if triples with community cards
         List<GameObject.Card> cards = go.getCommunityCards();
         if(cards.size() != 0) {
+            int count = 0;
             for (GameObject.Card card : cards) {
                 if(isTriple(firstCard, scndCard, card)){
                     return  call();
                 }
+                if(firstCard.getRank().equalsIgnoreCase(card.getRank())) {
+                    count++;
+                }
+                if(scndCard.getRank().equalsIgnoreCase(card.getRank())) {
+                    count++;
+                }
+
+            }
+            if(count >=2) {
+                //we have two pairs together with the community cards
+                System.out.println("we have two pairs");
+                return call() + 100;
             }
 
         }
+
+        //check if two pairs with community cards
 
         //if two cards of same rank
         if((sameRank || sameSuit) && go.getRound() == 0) {
@@ -48,13 +65,10 @@ public class SimpleStrategy implements Strategy {
             return Integer.MAX_VALUE; // all in
         }
 
-
+        //two high cards then we call
         if(twoHighCards(firstCard, scndCard)) {
             return call();
         }
-
-        //TODO
-
 
         int bet = call() + (rand.nextInt((max - min) + 1) + min);
         return bet;
