@@ -103,17 +103,27 @@ public class GameObject {
         //parsing players
         for (int i = 0 ; i < json_players.size() ; i++) {
             JsonObject obj = (JsonObject) json_players.get(i);
+            JsonArray json_cards = obj.getAsJsonArray("hole_cards");
+            ArrayList<Card> cards = new ArrayList<Card>();
+
+            for(int j = 0 ; j < json_cards.size() ; j++) {
+                JsonObject json_card = (JsonObject) json_cards.get(j);
+                Card card = new Card(json_card.get("rank").getAsString(), json_card.get("suit").getAsString());
+                cards.add(card);
+            }
 
             if(i == getIn_action()) {
+
+
                 ourPlayer = new OurPlayer(obj.get("id").getAsInt(), obj.get("name").getAsString(),
                         obj.get("status").getAsString(),
                         obj.get("stack").getAsInt(),
-                        obj.get("bet").getAsInt(), new ArrayList<Card>());
+                        obj.get("bet").getAsInt(), cards);
             } else {
                 Player pl = new Player(obj.get("id").getAsInt(), obj.get("name").getAsString(),
                         obj.get("status").getAsString(),
                         obj.get("stack").getAsInt(),
-                        obj.get("bet").getAsInt(), new ArrayList<Card>());
+                        obj.get("bet").getAsInt(), cards);
                 players.add(pl);
             }
 

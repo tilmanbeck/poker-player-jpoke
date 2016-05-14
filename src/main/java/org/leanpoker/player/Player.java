@@ -3,6 +3,7 @@ package org.leanpoker.player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.leanpoker.strategy.SimpleStrategy;
 
 import java.util.Random;
 
@@ -29,11 +30,9 @@ public class Player {
         //int bet = strategy.performBet(playerBet);
 
 
-        if(go.getPlayers().size() == 1) {
-            //System.out.println("player size: " + 1);
-            return Integer.MAX_VALUE; // all in if just us and another one
-        }
-        int bet = go.getCurrent_buy_in() - playerBet + go.getMinimumRaise() + (rand.nextInt((max - min) + 1) + min);
+
+        //int bet = go.getCurrent_buy_in() - playerBet + go.getMinimumRaise() + (rand.nextInt((max - min) + 1) + min);
+        int bet = strategy.performBet();
         System.out.println("Our bet: " + bet);
         return bet;
     }
